@@ -64,22 +64,20 @@ All theme colors are CSS variables in `style.css`:
 ```
 
 ### Contact form
-The form currently shows a success state client-side only.
-To make it functional, integrate with:
-- **EmailJS** (free, no backend needed)
-- **Formspree** (`action="https://formspree.io/f/YOUR_ID"`)
-- Your own backend API
+The form now supports backend email delivery through a local API + SMTP server.
+
+To enable it, create a `.env` file from `.env.example` and configure your SMTP provider.
 
 ## Running locally
-Simply open `index.html` in a browser — no build step needed.
-For best experience with fonts, serve via a local server:
+Install dependencies and start the server:
 ```bash
-# Python
-python -m http.server 8000
-
-# Node
-npx serve .
+npm install
+npm start
 ```
+
+Then open `http://localhost:3000` in your browser.
+
+If you want to continue serving the site as static HTML, keep using the `mailto:` approach instead. This backend option requires the Node server to be running.
 
 ## Features
 - ✅ Custom neon cursor with lag effect
