@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects — KIRA.DEV</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/animations.css" />
+  <link rel="stylesheet" href="assets/css/cyberpunk.css" />
+  <style>
+    .filter-bar {
+      display: flex; gap: 0.75rem; flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+    .filter-btn {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border: 1px solid var(--dark-border);
+      border-radius: 2px;
+      background: transparent;
+      color: var(--text-secondary);
+      cursor: none;
+      transition: var(--transition);
+    }
+    .filter-btn:hover, .filter-btn.active {
+      border-color: var(--neon-cyan);
+      color: var(--neon-cyan);
+      background: rgba(0,245,255,0.05);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .featured-project {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+    @media (max-width: 768px) { .featured-project { grid-template-columns: 1fr; } }
+
+    .featured-badge {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      color: var(--neon-yellow);
+      border: 1px solid var(--neon-yellow);
+      padding: 2px 8px;
+      border-radius: 2px;
+      display: inline-block;
+      margin-bottom: 1rem;
+    }
+    .featured-title {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--text-primary);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+    .featured-img {
+      width: 100%; aspect-ratio: 16/10;
+      background: linear-gradient(135deg, #0d1428 0%, #1a2440 50%, #0d1428 100%);
+      border: 1px solid rgba(0,245,255,0.2);
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .featured-img::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: conic-gradient(from 0deg, transparent 70%, rgba(0,245,255,0.08) 80%, transparent 90%);
+      animation: rotate-slow 8s linear infinite;
+    }
+  </style>
+</head>
+<body>
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
+  <div class="page-transition-overlay" style="transform:scaleY(1); background:var(--dark-bg); position:fixed; inset:0; z-index:9000; transition:transform 0.45s cubic-bezier(0.4,0,0.2,1); transform-origin:top;"></div>
+  <canvas id="particle-canvas"></canvas>
+
+  <nav>
+    <a href="index.html" class="nav-logo flicker">KIRA<span style="color:var(--neon-magenta)">.</span>DEV</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="skills.html">Skills</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <button class="nav-hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  </nav>
+
+  <main>
+    <div class="page-hero">
+      <div class="eyebrow">// Mission Log</div>
+      <h1>My <span class="accent">Projects</span></h1>
+    </div>
+
+    <div class="section">
+      <!-- Filter -->
+      <div class="filter-bar fade-in">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="web">Web</button>
+        <button class="filter-btn" data-filter="ai">AI / ML</button>
+        <button class="filter-btn" data-filter="drone">Drones</button>
+        <button class="filter-btn" data-filter="tool">Tools</button>
+      </div>
+
+      <div class="projects-grid">
+
+        <!-- Featured -->
+        <div class="card featured-project fade-in" data-cat="drone ai">
+          <div>
+            <span class="featured-badge">★ Featured Mission</span>
+            <div class="project-num">// 001</div>
+            <div class="featured-title">Autonomous Drone Navigation AI</div>
+            <p class="project-desc">A complete autonomous flight system using computer vision and deep learning. The drone maps environments in real-time using SLAM algorithms and avoids obstacles at 80km/h speeds. Achieved 94% accuracy in dynamic environment navigation.</p>
+            <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.25rem;">
+              <span class="tag tag-cyan">Python</span>
+              <span class="tag tag-magenta">OpenCV</span>
+              <span class="tag tag-yellow">TensorFlow</span>
+              <span class="tag tag-cyan">ROS2</span>
+              <span class="tag tag-magenta">Raspberry Pi</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="btn btn-primary">// GitHub</a>
+              <a href="#" class="btn btn-secondary">// Demo</a>
+            </div>
+          </div>
+          <div class="featured-img">🛸</div>
+        </div>
+
+        <!-- Project 002 -->
+        <div class="card project-card fade-in fade-in-delay-1" data-cat="web">
+          <div class="corner-tl"></div><div class="corner-br"></div>
+          <div class="project-card-img-placeholder"><span style="font-size:2.5rem">⚡</span></div>
+          <div class="project-num">// 002</div>
+          <div class="project-title">Neon Analytics Dashboard</div>
+          <p class="project-desc">Real-time analytics UI with live WebSocket streams, custom D3.js charts, and dark cyberpunk theme.</p>
+          <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem;">
+            <span class="tag tag-cyan">React</span>
+            <span class="tag tag-magenta">D3.js</span>
+            <span class="tag tag-yellow">Node.js</span>
+          </div>
+          <div class="project-links">
+            <a href="#" class="btn btn-primary">// GitHub</a>
+            <a href="#" class="btn btn-secondary">// Live</a>
+          </div>
+        </div>
+
+        <!-- Project 003 -->
+        <div class="card project-card fade-in fade-in-delay-2" data-cat="ai">
+          <div class="corner-tl"></div><div class="corner-br"></div>
+          <div class="project-card-img-placeholder"><span style="font-size:2.5rem">🤖</span></div>
+          <div class="project-num">// 003</div>
+          <div class="project-title">AI Voice Chat Interface</div>
+          <p class="project-desc">Conversational AI with voice recognition, natural language processing, and memory context across sessions.</p>
+          <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem;">
+            <span class="tag tag-cyan">Next.js</span>
+            <span class="tag tag-magenta">GPT-4</span>
+            <span class="tag tag-yellow">WebRTC</span>
+          </div>
+          <div class="project-links">
+            <a href="#" class="btn btn-primary">// GitHub</a>
+            <a href="#" class="btn btn-secondary">// Try It</a>
+          </div>
+        </div>
+
+        <!-- Project 004 -->
+        <div class="card project-card fade-in" data-cat="tool">
+          <div class="corner-tl"></div><div class="corner-br"></div>
+          <div class="project-card-img-placeholder"><span style="font-size:2.5rem">🔧</span></div>
+          <div class="project-num">// 004</div>
+          <div class="project-title">Dev CLI Toolkit</div>
+          <p class="project-desc">A terminal-based productivity suite with project scaffolding, git workflows, and deployment automation.</p>
+          <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem;">
+            <span class="tag tag-cyan">Rust</span>
+            <span class="tag tag-magenta">Shell</span>
+            <span class="tag tag-yellow">Go</span>
+          </div>
+          <div class="project-links">
+            <a href="#" class="btn btn-primary">// GitHub</a>
+          </div>
+        </div>
+
+        <!-- Project 005 -->
+        <div class="card project-card fade-in fade-in-delay-1" data-cat="web ai">
+          <div class="corner-tl"></div><div class="corner-br"></div>
+          <div class="project-card-img-placeholder"><span style="font-size:2.5rem">🎨</span></div>
+          <div class="project-num">// 005</div>
+          <div class="project-title">AI Image Generator</div>
+          <p class="project-desc">Stable Diffusion-powered image generator with custom LoRA model trained on anime art styles.</p>
+          <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem;">
+            <span class="tag tag-cyan">Python</span>
+            <span class="tag tag-magenta">Stable Diffusion</span>
+            <span class="tag tag-yellow">FastAPI</span>
+          </div>
+          <div class="project-links">
+            <a href="#" class="btn btn-primary">// GitHub</a>
+            <a href="#" class="btn btn-secondary">// Demo</a>
+          </div>
+        </div>
+
+        <!-- Project 006 -->
+        <div class="card project-card fade-in fade-in-delay-2" data-cat="drone">
+          <div class="corner-tl"></div><div class="corner-br"></div>
+          <div class="project-card-img-placeholder"><span style="font-size:2.5rem">📡</span></div>
+          <div class="project-num">// 006</div>
+          <div class="project-title">FPV Telemetry App</div>
+          <p class="project-desc">Mobile app for real-time FPV drone telemetry with GPS tracking, battery analytics, and flight logging.</p>
+          <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem;">
+            <span class="tag tag-cyan">Flutter</span>
+            <span class="tag tag-magenta">MQTT</span>
+            <span class="tag tag-yellow">Firebase</span>
+          </div>
+          <div class="project-links">
+            <a href="#" class="btn btn-primary">// GitHub</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <span style="color:var(--neon-cyan)">KIRA.DEV</span> &nbsp;·&nbsp; &copy; 2025 Arjun Sharma &nbsp;·&nbsp; Built with passion &amp; neon
+  </footer>
+
+  <script src="assets/js/particles.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/transitions.js"></script>
+  <script>
+    // Filter logic
+    const btns = document.querySelectorAll('.filter-btn');
+    const items = document.querySelectorAll('.projects-grid > [data-cat]');
+    btns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        btns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const f = btn.getAttribute('data-filter');
+        items.forEach(item => {
+          const cats = item.getAttribute('data-cat') || '';
+          if (f === 'all' || cats.includes(f)) {
+            item.style.display = '';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

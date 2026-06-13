@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — KIRA.DEV</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/animations.css" />
+  <link rel="stylesheet" href="assets/css/cyberpunk.css" />
+  <style>
+    .about-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 4rem; align-items: start; }
+    @media (max-width: 768px) { .about-grid { grid-template-columns: 1fr; gap: 2rem; } }
+
+    .profile-side { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
+    .profile-ring-wrap { margin-bottom: 0.5rem; }
+
+    .profile-card {
+      width: 100%;
+      background: var(--dark-card);
+      border: 1px solid var(--dark-border);
+      border-radius: 4px;
+      padding: 1.25rem;
+    }
+    .profile-stat-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid var(--dark-border);
+    }
+    .profile-stat-row:last-child { border-bottom: none; }
+    .profile-stat-key {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+    }
+    .profile-stat-val {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--neon-cyan);
+    }
+
+    .bio-text {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+    .bio-text span { color: var(--neon-cyan); }
+
+    .interests-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 0.75rem; margin-top: 1.5rem; }
+    .interest-item {
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      background: var(--dark-card);
+      border: 1px solid var(--dark-border);
+      border-radius: 4px;
+      padding: 1rem;
+      text-align: center;
+      transition: var(--transition);
+    }
+    .interest-item:hover { border-color: rgba(0,245,255,0.3); }
+    .interest-icon { font-size: 1.5rem; }
+    .interest-name { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.1em; color: var(--text-secondary); text-transform: uppercase; }
+  </style>
+</head>
+<body>
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
+  <div class="page-transition-overlay" style="transform:scaleY(1); background:var(--dark-bg); position:fixed; inset:0; z-index:9000; transition:transform 0.45s cubic-bezier(0.4,0,0.2,1); transform-origin:top;"></div>
+  <canvas id="particle-canvas"></canvas>
+
+  <nav>
+    <a href="index.html" class="nav-logo flicker">KIRA<span style="color:var(--neon-magenta)">.</span>DEV</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="skills.html">Skills</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <button class="nav-hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  </nav>
+
+  <main>
+    <div class="page-hero">
+      <div class="eyebrow">// Character Profile</div>
+      <h1>About <span class="accent">Me</span></h1>
+    </div>
+
+    <div class="section">
+      <div class="about-grid">
+
+        <!-- Left: Profile -->
+        <div class="profile-side fade-in">
+          <div class="profile-ring-wrap float">
+            <img class="profile-avatar" src="https://avatars.githubusercontent.com/u/87747215?s=400&v=4" alt="Arjun Sharma" />
+          </div>
+
+          <div class="profile-card">
+            <div class="profile-stat-row">
+              <span class="profile-stat-key">// Name</span>
+              <span class="profile-stat-val">Arjun Sharma</span>
+            </div>
+            <div class="profile-stat-row">
+              <span class="profile-stat-key">// Role</span>
+              <span class="profile-stat-val">Full-Stack Dev</span>
+            </div>
+            <div class="profile-stat-row">
+              <span class="profile-stat-key">// Location</span>
+              <span class="profile-stat-val">Punjab, India</span>
+            </div>
+            <div class="profile-stat-row">
+              <span class="profile-stat-key">// Status</span>
+              <span class="profile-stat-val" style="color:var(--neon-green)">● Online</span>
+            </div>
+            <div class="profile-stat-row">
+              <span class="profile-stat-key">// Education</span>
+              <span class="profile-stat-val">BTech CSE</span>
+            </div>
+            <div class="profile-stat-row">
+              <span class="profile-stat-key">// Lang</span>
+              <span class="profile-stat-val">Python, JS, C++</span>
+            </div>
+          </div>
+
+          <div style="width:100%; display:flex; flex-direction:column; gap:0.75rem;">
+            <a href="contact.html" class="btn btn-primary" style="width:100%; justify-content:center;">// Hire Me</a>
+            <a href="#" class="btn btn-secondary" style="width:100%; justify-content:center;">// Download CV</a>
+          </div>
+        </div>
+
+        <!-- Right: Bio -->
+        <div class="bio-side">
+          <div class="section-label fade-in">// Bio.log</div>
+          <h2 class="section-title fade-in" style="margin-bottom:1.5rem;">Developer by logic,<br>Designer by soul</h2>
+
+          <p class="bio-text fade-in">
+            Hey, I'm <span>Arjun</span> — a BTech Computer Science student and self-taught developer with a passion for building things that look and feel extraordinary. I'm obsessed with the intersection of <span>technology and art</span>, especially when it comes to cyberpunk aesthetics and anime culture.
+          </p>
+          <p class="bio-text fade-in fade-in-delay-1">
+            My journey started with writing Python scripts to control drones and quickly evolved into full-stack development. I believe every project should have a <span>unique personality</span> — not just functional code, but a visual identity that leaves an impression.
+          </p>
+          <p class="bio-text fade-in fade-in-delay-2">
+            When I'm not coding, you'll find me tinkering with FPV drones, watching anime, or designing UI concepts that push the boundaries of what's expected.
+          </p>
+
+          <hr class="neon-divider" />
+
+          <!-- Timeline -->
+          <div class="section-label fade-in">// Timeline</div>
+          <div class="timeline" style="margin-top:1.5rem;">
+
+            <div class="timeline-item fade-in">
+              <div class="timeline-date">2024 – Present</div>
+              <div class="timeline-title">Freelance UI Developer</div>
+              <div class="timeline-sub">Independent · Remote</div>
+              <div class="timeline-desc">Building custom web experiences for startups and creative agencies worldwide.</div>
+            </div>
+
+            <div class="timeline-item fade-in fade-in-delay-1">
+              <div class="timeline-date">2023</div>
+              <div class="timeline-title">Open Source Contributor</div>
+              <div class="timeline-sub">GitHub · Multiple Projects</div>
+              <div class="timeline-desc">Contributed to drone simulation and animation library projects.</div>
+            </div>
+
+            <div class="timeline-item fade-in fade-in-delay-2">
+              <div class="timeline-date">2022 – 2025</div>
+              <div class="timeline-title">BTech Computer Science</div>
+              <div class="timeline-sub">Punjab Technical University</div>
+              <div class="timeline-desc">Core focus on algorithms, machine learning, and embedded systems.</div>
+            </div>
+
+            <div class="timeline-item fade-in fade-in-delay-3">
+              <div class="timeline-date">2021</div>
+              <div class="timeline-title">First Drone Build</div>
+              <div class="timeline-sub">Personal Project</div>
+              <div class="timeline-desc">Built a custom FPV racing drone with Arduino-based flight controller.</div>
+            </div>
+
+          </div>
+
+          <hr class="neon-divider" />
+
+          <!-- Interests -->
+          <div class="section-label fade-in">// Interests</div>
+          <div class="interests-grid">
+            <div class="interest-item fade-in"><span class="interest-icon">🛸</span><span class="interest-name">FPV Drones</span></div>
+            <div class="interest-item fade-in fade-in-delay-1"><span class="interest-icon">🎌</span><span class="interest-name">Anime</span></div>
+            <div class="interest-item fade-in fade-in-delay-2"><span class="interest-icon">🎮</span><span class="interest-name">Game Dev</span></div>
+            <div class="interest-item fade-in fade-in-delay-1"><span class="interest-icon">🎨</span><span class="interest-name">UI Design</span></div>
+            <div class="interest-item fade-in fade-in-delay-2"><span class="interest-icon">🤖</span><span class="interest-name">AI / ML</span></div>
+            <div class="interest-item fade-in fade-in-delay-3"><span class="interest-icon">🎵</span><span class="interest-name">Lo-fi Music</span></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <span style="color:var(--neon-cyan)">KIRA.DEV</span> &nbsp;·&nbsp; &copy; 2025 Arjun Sharma &nbsp;·&nbsp; Built with passion &amp; neon
+  </footer>
+
+  <script src="assets/js/particles.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/transitions.js"></script>
+</body>
+</html>

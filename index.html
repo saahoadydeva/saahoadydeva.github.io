@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KIRA.DEV — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/animations.css" />
+  <link rel="stylesheet" href="assets/css/cyberpunk.css" />
+  <style>
+    /* ---- HERO ---- */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      padding: 80px 2rem 2rem;
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 800px; }
+
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.3em;
+      color: var(--neon-magenta);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+    .hero-eyebrow::before, .hero-eyebrow::after {
+      content: '';
+      display: block;
+      width: 40px; height: 1px;
+      background: var(--neon-magenta);
+      opacity: 0.5;
+    }
+
+    .hero-name {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 10vw, 8rem);
+      font-weight: 900;
+      line-height: 0.9;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+    }
+    .hero-name .line1 { display: block; color: var(--text-primary); }
+    .hero-name .line2 {
+      display: block;
+      color: transparent;
+      -webkit-text-stroke: 1px var(--neon-cyan);
+      text-shadow: none;
+    }
+
+    .hero-role {
+      font-family: var(--font-mono);
+      font-size: clamp(0.85rem, 2vw, 1rem);
+      color: var(--neon-cyan);
+      letter-spacing: 0.15em;
+      margin-bottom: 2rem;
+      min-height: 1.4em;
+    }
+
+    .hero-desc {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      max-width: 480px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.7;
+    }
+
+    .hero-cta { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    /* Grid lines in hero bg */
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,245,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,245,255,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+      pointer-events: none;
+    }
+
+    /* Glow orbs */
+    .hero-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+    }
+    .orb-1 {
+      width: 400px; height: 400px;
+      background: rgba(0,245,255,0.07);
+      top: -100px; right: -100px;
+    }
+    .orb-2 {
+      width: 300px; height: 300px;
+      background: rgba(255,0,170,0.06);
+      bottom: -50px; left: -80px;
+    }
+
+    /* Scroll indicator */
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem; left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      z-index: 2;
+    }
+    .scroll-hint-line {
+      width: 1px; height: 40px;
+      background: linear-gradient(to bottom, var(--neon-cyan), transparent);
+      animation: float 1.8s ease-in-out infinite;
+    }
+
+    /* Status badges */
+    .hero-badges {
+      display: flex; gap: 0.75rem;
+      justify-content: center; flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+    .status-badge {
+      display: flex; align-items: center; gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border: 1px solid var(--dark-border);
+      border-radius: 2px;
+    }
+    .status-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--neon-green);
+      box-shadow: 0 0 6px var(--neon-green);
+      animation: neon-pulse 2s infinite;
+    }
+
+    /* Stats row */
+    .hero-stats {
+      display: flex; gap: 3rem;
+      justify-content: center; flex-wrap: wrap;
+      margin-top: 4rem;
+      padding-top: 3rem;
+      border-top: 1px solid var(--dark-border);
+    }
+    .hero-stat { text-align: center; }
+    .hero-stat-num {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--neon-cyan);
+      display: block;
+      text-shadow: 0 0 20px rgba(0,245,255,0.4);
+    }
+    .hero-stat-label {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
+  <div class="page-transition-overlay" style="transform:scaleY(1); background:var(--dark-bg); position:fixed; inset:0; z-index:9000; transition:transform 0.45s cubic-bezier(0.4,0,0.2,1); transform-origin:top;"></div>
+  <canvas id="particle-canvas"></canvas>
+
+  <nav>
+    <a href="index.html" class="nav-logo flicker">KIRA<span style="color:var(--neon-magenta)">.</span>DEV</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="skills.html">Skills</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <button class="nav-hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="hero-grid"></div>
+      <div class="hero-orb orb-1"></div>
+      <div class="hero-orb orb-2"></div>
+
+      <div class="hero-content">
+        <div style="display:flex; justify-content:center; margin-bottom:1.5rem;">
+          <div style="position:relative; display:inline-block;">
+            <img src="https://avatars.githubusercontent.com/u/87747215?s=400&v=4"
+              alt="Arjun Sharma"
+              style="width:90px; height:90px; border-radius:50%; object-fit:cover;
+                     border:2px solid rgba(0,245,255,0.5);
+                     box-shadow:0 0 20px rgba(0,245,255,0.3), 0 0 40px rgba(0,245,255,0.1);" />
+            <span style="position:absolute; bottom:4px; right:4px;
+                         width:14px; height:14px; border-radius:50%;
+                         background:#39ff14; border:2px solid var(--dark-bg);
+                         box-shadow:0 0 8px #39ff14;"></span>
+          </div>
+        </div>
+        <div class="hero-eyebrow">Initializing System</div>
+
+        <div class="hero-badges">
+          <span class="status-badge"><span class="status-dot"></span> Available for Work</span>
+          <span class="status-badge">🎓 BTech CSE</span>
+          <span class="status-badge">📍 Punjab, India</span>
+        </div>
+
+        <h1 class="hero-name">
+          <span class="line1 glitch-text">ARJUN</span>
+          <span class="line2">SHARMA</span>
+        </h1>
+
+        <p class="hero-role type-cursor" data-type="// Full-Stack Developer · UI Engineer · Drone Enthusiast" data-type-delay="400"></p>
+
+        <p class="hero-desc">
+          Building digital experiences at the intersection of code and creativity.
+          Specializing in immersive UIs and cutting-edge web technologies.
+        </p>
+
+        <div class="hero-cta">
+          <a href="projects.html" class="btn btn-primary">// View Projects</a>
+          <a href="contact.html" class="btn btn-secondary">// Contact Me</a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <span class="hero-stat-num">20+</span>
+            <span class="hero-stat-label">Projects Built</span>
+          </div>
+          <div class="hero-stat">
+            <span class="hero-stat-num">3+</span>
+            <span class="hero-stat-label">Years Coding</span>
+          </div>
+          <div class="hero-stat">
+            <span class="hero-stat-num">10+</span>
+            <span class="hero-stat-label">Technologies</span>
+          </div>
+          <div class="hero-stat">
+            <span class="hero-stat-num">5★</span>
+            <span class="hero-stat-label">Client Rating</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="scroll-hint">
+        <span>Scroll</span>
+        <span class="scroll-hint-line"></span>
+      </div>
+    </section>
+
+    <!-- Featured section -->
+    <section class="section">
+      <div class="section-label fade-in">// Featured Work</div>
+      <h2 class="section-title fade-in">Recent Missions</h2>
+      <div class="grid-3 fade-in fade-in-delay-1">
+
+        <div class="card project-card">
+          <div class="corner-tl"></div><div class="corner-br"></div>
+          <div class="project-card-img-placeholder"><span style="font-size:2.5rem">🛸</span></div>
+          <div class="project-num">// 001</div>
+          <div class="project-title">Drone Navigation AI</div>
+          <p class="project-desc">Autonomous flight controller with computer vision obstacle avoidance.</p>
+          <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
+            <span class="tag tag-cyan">Python</span>
+            <span class="tag tag-magenta">OpenCV</span>
+            <span class="tag tag-yellow">ROS</span>
+          </div>
+        </div>
+
+        <div class="card project-card">
+          <div class="corner-tl"></div><div class="corner-br"></div>
+          <div class="project-card-img-placeholder"><span style="font-size:2.5rem">⚡</span></div>
+          <div class="project-num">// 002</div>
+          <div class="project-title">Neon Dashboard UI</div>
+          <p class="project-desc">Real-time analytics dashboard with live WebSocket data streams.</p>
+          <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
+            <span class="tag tag-cyan">React</span>
+            <span class="tag tag-magenta">D3.js</span>
+            <span class="tag tag-yellow">Node</span>
+          </div>
+        </div>
+
+        <div class="card project-card">
+          <div class="corner-tl"></div><div class="corner-br"></div>
+          <div class="project-card-img-placeholder"><span style="font-size:2.5rem">🤖</span></div>
+          <div class="project-num">// 003</div>
+          <div class="project-title">AI Chat Interface</div>
+          <p class="project-desc">Conversational AI assistant with context memory and voice support.</p>
+          <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
+            <span class="tag tag-cyan">Next.js</span>
+            <span class="tag tag-magenta">GPT-4</span>
+            <span class="tag tag-yellow">WebRTC</span>
+          </div>
+        </div>
+
+      </div>
+      <div style="text-align:center; margin-top:2.5rem;" class="fade-in fade-in-delay-2">
+        <a href="projects.html" class="btn btn-primary">// All Projects</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span style="color:var(--neon-cyan)">KIRA.DEV</span> &nbsp;·&nbsp; &copy; 2025 Arjun Sharma &nbsp;·&nbsp; Built with passion &amp; neon
+  </footer>
+
+  <script src="assets/js/particles.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/transitions.js"></script>
+</body>
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gallery — KIRA.DEV</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/animations.css" />
+  <link rel="stylesheet" href="assets/css/cyberpunk.css" />
+  <style>
+    .gallery-filter { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 2rem; }
+    .gal-btn {
+      font-family: var(--font-mono); font-size: 0.68rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 5px 14px; border: 1px solid var(--dark-border);
+      border-radius: 2px; background: transparent;
+      color: var(--text-secondary); cursor: none; transition: var(--transition);
+    }
+    .gal-btn:hover, .gal-btn.active { border-color: var(--neon-magenta); color: var(--neon-magenta); background: rgba(255,0,170,0.05); }
+
+    .masonry-gallery {
+      columns: 3;
+      column-gap: 1rem;
+    }
+    @media (max-width: 900px) { .masonry-gallery { columns: 2; } }
+    @media (max-width: 560px) { .masonry-gallery { columns: 1; } }
+
+    .gallery-card {
+      break-inside: avoid;
+      margin-bottom: 1rem;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--dark-border);
+      border-radius: 4px;
+      cursor: none;
+      background: var(--dark-card);
+    }
+    .gallery-card:hover { border-color: rgba(255,0,170,0.4); }
+    .gallery-placeholder-art {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, var(--dark-secondary), var(--dark-card));
+    }
+    .gallery-placeholder-art::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 4px,
+        rgba(255,0,170,0.03) 4px,
+        rgba(255,0,170,0.03) 8px
+      );
+    }
+    .gallery-card-info {
+      padding: 0.75rem 1rem;
+      border-top: 1px solid var(--dark-border);
+    }
+    .gallery-card-title { font-family: var(--font-display); font-size: 0.8rem; font-weight: 700; color: var(--text-primary); margin-bottom: 3px; }
+    .gallery-card-sub { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em; color: var(--neon-magenta); }
+
+    /* Lightbox */
+    .lightbox {
+      position: fixed; inset: 0; z-index: 8000;
+      background: rgba(5,8,16,0.95);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .lightbox.open { opacity: 1; pointer-events: all; }
+    .lightbox-content {
+      position: relative; max-width: 80vw; max-height: 80vh;
+      display: flex; flex-direction: column; align-items: center; gap: 1rem;
+    }
+    .lightbox-art {
+      width: 400px; height: 400px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 6rem;
+      background: var(--dark-card);
+      border: 1px solid rgba(255,0,170,0.3);
+      border-radius: 4px;
+    }
+    .lightbox-title { font-family: var(--font-display); font-size: 1.1rem; color: var(--text-primary); }
+    .lightbox-close {
+      position: absolute; top: -3rem; right: 0;
+      font-family: var(--font-mono); font-size: 0.8rem;
+      color: var(--neon-magenta); cursor: none;
+      border: 1px solid var(--neon-magenta);
+      background: transparent; padding: 4px 10px; border-radius: 2px;
+    }
+    .lightbox-close:hover { background: rgba(255,0,170,0.1); }
+  </style>
+</head>
+<body>
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
+  <div class="page-transition-overlay" style="transform:scaleY(1); background:var(--dark-bg); position:fixed; inset:0; z-index:9000; transition:transform 0.45s cubic-bezier(0.4,0,0.2,1); transform-origin:top;"></div>
+  <canvas id="particle-canvas"></canvas>
+
+  <nav>
+    <a href="index.html" class="nav-logo flicker">KIRA<span style="color:var(--neon-magenta)">.</span>DEV</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="skills.html">Skills</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <button class="nav-hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  </nav>
+
+  <main>
+    <div class="page-hero">
+      <div class="eyebrow">// Visual Database</div>
+      <h1>The <span class="accent">Gallery</span></h1>
+    </div>
+
+    <div class="section">
+      <div class="gallery-filter fade-in">
+        <button class="gal-btn active" data-gal="all">All</button>
+        <button class="gal-btn" data-gal="ui">UI Designs</button>
+        <button class="gal-btn" data-gal="anime">Anime Art</button>
+        <button class="gal-btn" data-gal="drone">Drone Shots</button>
+        <button class="gal-btn" data-gal="3d">3D Work</button>
+      </div>
+
+      <div class="masonry-gallery fade-in">
+
+        <div class="gallery-card" data-gal="ui" style="cursor:pointer" onclick="openLB('🖥️','Neon Dashboard UI')">
+          <div class="gallery-placeholder-art" style="height:220px;">🖥️</div>
+          <div class="gallery-card-info"><div class="gallery-card-title">Neon Dashboard UI</div><div class="gallery-card-sub">// UI Design</div></div>
+        </div>
+
+        <div class="gallery-card" data-gal="anime" style="cursor:pointer" onclick="openLB('🌸','Sakura Cyberpunk')">
+          <div class="gallery-placeholder-art" style="height:300px;">🌸</div>
+          <div class="gallery-card-info"><div class="gallery-card-title">Sakura Cyberpunk</div><div class="gallery-card-sub">// Anime Art</div></div>
+        </div>
+
+        <div class="gallery-card" data-gal="drone" style="cursor:pointer" onclick="openLB('📡','Golden Hour Flight')">
+          <div class="gallery-placeholder-art" style="height:190px;">📡</div>
+          <div class="gallery-card-info"><div class="gallery-card-title">Golden Hour Flight</div><div class="gallery-card-sub">// FPV Drone</div></div>
+        </div>
+
+        <div class="gallery-card" data-gal="3d" style="cursor:pointer" onclick="openLB('💎','Crystal Mech')">
+          <div class="gallery-placeholder-art" style="height:260px;">💎</div>
+          <div class="gallery-card-info"><div class="gallery-card-title">Crystal Mech</div><div class="gallery-card-sub">// 3D Render</div></div>
+        </div>
+
+        <div class="gallery-card" data-gal="anime" style="cursor:pointer" onclick="openLB('⛩️','Tokyo Neon Night')">
+          <div class="gallery-placeholder-art" style="height:200px;">⛩️</div>
+          <div class="gallery-card-info"><div class="gallery-card-title">Tokyo Neon Night</div><div class="gallery-card-sub">// Anime Art</div></div>
+        </div>
+
+        <div class="gallery-card" data-gal="ui" style="cursor:pointer" onclick="openLB('🎮','Game HUD Concept')">
+          <div class="gallery-placeholder-art" style="height:180px;">🎮</div>
+          <div class="gallery-card-info"><div class="gallery-card-title">Game HUD Concept</div><div class="gallery-card-sub">// UI Design</div></div>
+        </div>
+
+        <div class="gallery-card" data-gal="drone" style="cursor:pointer" onclick="openLB('🛸','Night Circuit Race')">
+          <div class="gallery-placeholder-art" style="height:240px;">🛸</div>
+          <div class="gallery-card-info"><div class="gallery-card-title">Night Circuit Race</div><div class="gallery-card-sub">// FPV Drone</div></div>
+        </div>
+
+        <div class="gallery-card" data-gal="3d" style="cursor:pointer" onclick="openLB('🤖','Mecha Prototype')">
+          <div class="gallery-placeholder-art" style="height:220px;">🤖</div>
+          <div class="gallery-card-info"><div class="gallery-card-title">Mecha Prototype</div><div class="gallery-card-sub">// 3D Render</div></div>
+        </div>
+
+        <div class="gallery-card" data-gal="anime" style="cursor:pointer" onclick="openLB('🌙','Moonlight Samurai')">
+          <div class="gallery-placeholder-art" style="height:280px;">🌙</div>
+          <div class="gallery-card-info"><div class="gallery-card-title">Moonlight Samurai</div><div class="gallery-card-sub">// Anime Art</div></div>
+        </div>
+
+        <div class="gallery-card" data-gal="ui" style="cursor:pointer" onclick="openLB('⚡','Terminal Interface')">
+          <div class="gallery-placeholder-art" style="height:160px;">⚡</div>
+          <div class="gallery-card-info"><div class="gallery-card-title">Terminal Interface</div><div class="gallery-card-sub">// UI Design</div></div>
+        </div>
+
+        <div class="gallery-card" data-gal="3d" style="cursor:pointer" onclick="openLB('🌊','Hologram City')">
+          <div class="gallery-placeholder-art" style="height:200px;">🌊</div>
+          <div class="gallery-card-info"><div class="gallery-card-title">Hologram City</div><div class="gallery-card-sub">// 3D Render</div></div>
+        </div>
+
+        <div class="gallery-card" data-gal="drone" style="cursor:pointer" onclick="openLB('🏔️','Mountain Descent')">
+          <div class="gallery-placeholder-art" style="height:230px;">🏔️</div>
+          <div class="gallery-card-info"><div class="gallery-card-title">Mountain Descent</div><div class="gallery-card-sub">// FPV Drone</div></div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" onclick="closeLB(event)">
+    <div class="lightbox-content">
+      <button class="lightbox-close" onclick="document.getElementById('lightbox').classList.remove('open')">// Close</button>
+      <div class="lightbox-art" id="lb-art">🖼️</div>
+      <div class="lightbox-title" id="lb-title">Title</div>
+    </div>
+  </div>
+
+  <footer>
+    <span style="color:var(--neon-cyan)">KIRA.DEV</span> &nbsp;·&nbsp; &copy; 2025 Arjun Sharma &nbsp;·&nbsp; Built with passion &amp; neon
+  </footer>
+
+  <script src="assets/js/particles.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/transitions.js"></script>
+  <script>
+    // Gallery filter
+    const galBtns = document.querySelectorAll('.gal-btn');
+    const galItems = document.querySelectorAll('.gallery-card');
+    galBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        galBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const f = btn.getAttribute('data-gal');
+        galItems.forEach(item => {
+          const cat = item.getAttribute('data-gal');
+          item.style.display = (f === 'all' || cat === f) ? '' : 'none';
+        });
+      });
+    });
+
+    // Lightbox
+    function openLB(icon, title) {
+      document.getElementById('lb-art').textContent = icon;
+      document.getElementById('lb-title').textContent = title;
+      document.getElementById('lightbox').classList.add('open');
+    }
+    function closeLB(e) {
+      if (e.target === document.getElementById('lightbox')) {
+        document.getElementById('lightbox').classList.remove('open');
+      }
+    }
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') document.getElementById('lightbox').classList.remove('open');
+    });
+  </script>
+</body>
+</html>

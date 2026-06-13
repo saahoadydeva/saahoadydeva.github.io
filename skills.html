@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Skills — KIRA.DEV</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/animations.css" />
+  <link rel="stylesheet" href="assets/css/cyberpunk.css" />
+  <style>
+    .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    @media (max-width: 768px) { .skills-grid { grid-template-columns: 1fr; } }
+
+    .skill-category-title {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--neon-cyan);
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .skill-category-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, rgba(0,245,255,0.3), transparent);
+    }
+
+    /* Tech icon grid */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+      gap: 0.75rem;
+    }
+    .tech-item {
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      padding: 0.85rem 0.5rem;
+      background: var(--dark-card);
+      border: 1px solid var(--dark-border);
+      border-radius: 4px;
+      text-align: center;
+      transition: var(--transition);
+      cursor: default;
+    }
+    .tech-item:hover { border-color: rgba(0,245,255,0.4); transform: translateY(-3px); }
+    .tech-item:hover .tech-icon { filter: drop-shadow(0 0 8px var(--neon-cyan)); }
+    .tech-icon { font-size: 1.6rem; }
+    .tech-name { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.08em; color: var(--text-secondary); }
+
+    /* Radar / Radial */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+    .stat-card {
+      background: var(--dark-card);
+      border: 1px solid var(--dark-border);
+      border-radius: 4px;
+      padding: 1.25rem;
+      text-align: center;
+    }
+
+    /* Certifications */
+    .cert-list { display: flex; flex-direction: column; gap: 0.75rem; }
+    .cert-item {
+      display: flex; align-items: center; gap: 1rem;
+      background: var(--dark-card);
+      border: 1px solid var(--dark-border);
+      border-radius: 4px;
+      padding: 0.85rem 1rem;
+      transition: var(--transition);
+    }
+    .cert-item:hover { border-color: rgba(0,245,255,0.3); }
+    .cert-icon { font-size: 1.5rem; flex-shrink: 0; }
+    .cert-name { font-family: var(--font-body); font-size: 0.9rem; font-weight: 600; color: var(--text-primary); }
+    .cert-issuer { font-family: var(--font-mono); font-size: 0.65rem; color: var(--neon-cyan); letter-spacing: 0.08em; }
+  </style>
+</head>
+<body>
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
+  <div class="page-transition-overlay" style="transform:scaleY(1); background:var(--dark-bg); position:fixed; inset:0; z-index:9000; transition:transform 0.45s cubic-bezier(0.4,0,0.2,1); transform-origin:top;"></div>
+  <canvas id="particle-canvas"></canvas>
+
+  <nav>
+    <a href="index.html" class="nav-logo flicker">KIRA<span style="color:var(--neon-magenta)">.</span>DEV</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="skills.html">Skills</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <button class="nav-hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  </nav>
+
+  <main>
+    <div class="page-hero">
+      <div class="eyebrow">// Tech Arsenal</div>
+      <h1>My <span class="accent">Skills</span></h1>
+    </div>
+
+    <div class="section">
+
+      <!-- Stats row -->
+      <div class="stats-row fade-in">
+        <div class="stat-card">
+          <div class="stat-number">95%</div>
+          <div class="stat-label">Frontend Dev</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">85%</div>
+          <div class="stat-label">Backend Dev</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">78%</div>
+          <div class="stat-label">AI / ML</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">90%</div>
+          <div class="stat-label">UI Design</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">80%</div>
+          <div class="stat-label">Drone Systems</div>
+        </div>
+      </div>
+
+      <!-- Skill bars -->
+      <div class="skills-grid">
+        <!-- Left column -->
+        <div class="card fade-in">
+          <div class="skill-category-title">Frontend</div>
+          <div class="skill-item"><div class="skill-header"><span class="skill-name">React / Next.js</span><span class="skill-pct">95%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="95"></div></div></div>
+          <div class="skill-item"><div class="skill-header"><span class="skill-name">HTML / CSS / JS</span><span class="skill-pct">98%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="98"></div></div></div>
+          <div class="skill-item"><div class="skill-header"><span class="skill-name">TypeScript</span><span class="skill-pct">85%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="85"></div></div></div>
+          <div class="skill-item"><div class="skill-header"><span class="skill-name">Three.js / WebGL</span><span class="skill-pct">70%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="70"></div></div></div>
+          <div class="skill-item"><div class="skill-header"><span class="skill-name">Tailwind CSS</span><span class="skill-pct">92%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="92"></div></div></div>
+
+          <div class="skill-category-title" style="margin-top:1.75rem;">Backend</div>
+          <div class="skill-item"><div class="skill-header"><span class="skill-name">Node.js / Express</span><span class="skill-pct">87%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="87"></div></div></div>
+          <div class="skill-item"><div class="skill-header"><span class="skill-name">Python / FastAPI</span><span class="skill-pct">90%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="90"></div></div></div>
+          <div class="skill-item"><div class="skill-header"><span class="skill-name">PostgreSQL / MongoDB</span><span class="skill-pct">80%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="80"></div></div></div>
+          <div class="skill-item"><div class="skill-header"><span class="skill-name">Docker / DevOps</span><span class="skill-pct">72%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="72"></div></div></div>
+        </div>
+
+        <!-- Right column -->
+        <div class="card fade-in fade-in-delay-1">
+          <div class="skill-category-title">AI / ML</div>
+          <div class="skill-item"><div class="skill-header"><span class="skill-name">TensorFlow / PyTorch</span><span class="skill-pct">78%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="78"></div></div></div>
+          <div class="skill-item"><div class="skill-header"><span class="skill-name">Computer Vision</span><span class="skill-pct">82%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="82"></div></div></div>
+          <div class="skill-item"><div class="skill-header"><span class="skill-name">OpenCV</span><span class="skill-pct">85%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="85"></div></div></div>
+          <div class="skill-item"><div class="skill-header"><span class="skill-name">LLM / Prompt Eng</span><span class="skill-pct">88%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="88"></div></div></div>
+
+          <div class="skill-category-title" style="margin-top:1.75rem;">Drone / Embedded</div>
+          <div class="skill-item"><div class="skill-header"><span class="skill-name">ROS2</span><span class="skill-pct">75%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="75"></div></div></div>
+          <div class="skill-item"><div class="skill-header"><span class="skill-name">Arduino / ESP32</span><span class="skill-pct">85%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="85"></div></div></div>
+          <div class="skill-item"><div class="skill-header"><span class="skill-name">Raspberry Pi</span><span class="skill-pct">88%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="88"></div></div></div>
+          <div class="skill-item"><div class="skill-header"><span class="skill-name">MAVLink / PX4</span><span class="skill-pct">68%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="68"></div></div></div>
+          <div class="skill-item"><div class="skill-header"><span class="skill-name">FPV Systems</span><span class="skill-pct">90%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="90"></div></div></div>
+        </div>
+      </div>
+
+      <hr class="neon-divider" />
+
+      <!-- Tech icons -->
+      <div class="section-label fade-in">// Technologies Used</div>
+      <h3 class="section-title fade-in" style="font-size:1.4rem;">Full Stack</h3>
+      <div class="tech-grid fade-in">
+        <div class="tech-item"><span class="tech-icon">⚛️</span><span class="tech-name">React</span></div>
+        <div class="tech-item"><span class="tech-icon">▲</span><span class="tech-name">Next.js</span></div>
+        <div class="tech-item"><span class="tech-icon">🐍</span><span class="tech-name">Python</span></div>
+        <div class="tech-item"><span class="tech-icon">🟢</span><span class="tech-name">Node.js</span></div>
+        <div class="tech-item"><span class="tech-icon">🦀</span><span class="tech-name">Rust</span></div>
+        <div class="tech-item"><span class="tech-icon">🎯</span><span class="tech-name">TypeScript</span></div>
+        <div class="tech-item"><span class="tech-icon">🐘</span><span class="tech-name">PostgreSQL</span></div>
+        <div class="tech-item"><span class="tech-icon">🍃</span><span class="tech-name">MongoDB</span></div>
+        <div class="tech-item"><span class="tech-icon">🐳</span><span class="tech-name">Docker</span></div>
+        <div class="tech-item"><span class="tech-icon">☁️</span><span class="tech-name">AWS</span></div>
+        <div class="tech-item"><span class="tech-icon">🔥</span><span class="tech-name">Firebase</span></div>
+        <div class="tech-item"><span class="tech-icon">📱</span><span class="tech-name">Flutter</span></div>
+      </div>
+
+      <hr class="neon-divider" />
+
+      <!-- Certifications -->
+      <div class="section-label fade-in">// Certifications</div>
+      <div class="cert-list" style="max-width:600px;">
+        <div class="cert-item fade-in"><span class="cert-icon">🏆</span><div><div class="cert-name">AWS Certified Developer</div><div class="cert-issuer">Amazon Web Services · 2024</div></div></div>
+        <div class="cert-item fade-in fade-in-delay-1"><span class="cert-icon">🎓</span><div><div class="cert-name">Deep Learning Specialization</div><div class="cert-issuer">Coursera / DeepLearning.AI · 2023</div></div></div>
+        <div class="cert-item fade-in fade-in-delay-2"><span class="cert-icon">🛸</span><div><div class="cert-name">Drone Pilot License (DGCA)</div><div class="cert-issuer">Directorate General of Civil Aviation · 2023</div></div></div>
+        <div class="cert-item fade-in fade-in-delay-3"><span class="cert-icon">⚡</span><div><div class="cert-name">React Certification</div><div class="cert-issuer">Meta · 2023</div></div></div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <span style="color:var(--neon-cyan)">KIRA.DEV</span> &nbsp;·&nbsp; &copy; 2025 Arjun Sharma &nbsp;·&nbsp; Built with passion &amp; neon
+  </footer>
+
+  <script src="assets/js/particles.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/transitions.js"></script>
+</body>
+</html>
