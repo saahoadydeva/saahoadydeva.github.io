@@ -159,9 +159,17 @@ if (contactForm) {
         }),
       });
 
+      const contentType = response.headers.get('content-type') || '';
+      let responseBody;
+
+      if (contentType.includes('application/json')) {
+        responseBody = await response.json();
+      } else {
+        responseBody = { error: await response.text() };
+      }
+
       if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'Unable to send your message.');
+        throw new Error(responseBody.error || 'Unable to send your message.');
       }
 
       alert('Your message was sent successfully.');

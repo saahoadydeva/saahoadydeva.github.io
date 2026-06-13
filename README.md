@@ -64,20 +64,23 @@ All theme colors are CSS variables in `style.css`:
 ```
 
 ### Contact form
-The form now supports backend email delivery through a local API + SMTP server.
+The form now supports backend email delivery through a Cloudflare Pages function using the Brevo email API.
 
-To enable it, create a `.env` file from `.env.example` and configure your SMTP provider.
+To deploy to Cloudflare Pages:
+1. Add the following environment variables to your Pages project:
+   - `BREVO_API_KEY`
+   - `CONTACT_TO_EMAIL`
+   - `CONTACT_FROM_EMAIL`
+2. Deploy the site to Cloudflare Pages.
 
-## Running locally
-Install dependencies and start the server:
+For local development, you can still use the Node server if you want. To run locally:
 ```bash
 npm install
 npm start
 ```
+Then open `http://localhost:3000`.
 
-Then open `http://localhost:3000` in your browser.
-
-If you want to continue serving the site as static HTML, keep using the `mailto:` approach instead. This backend option requires the Node server to be running.
+If you want to use local Node only, keep `server.js` and the older SMTP workflow; otherwise Cloudflare Pages will use the function in `functions/api/contact.js`.
 
 ## Features
 - ✅ Custom neon cursor with lag effect
