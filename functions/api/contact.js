@@ -45,13 +45,24 @@ export async function onRequestPost({ request, env }) {
     if (!response.ok) {
       const errorText = await response.text();
       console.error('Brevo send failed:', response.status, errorText);
-      return new Response(JSON.stringify({ error: 'Unable to send message via Brevo.' }), { status: 502, headers: { 'Content-Type': 'application/json' } });
+
+      let errorMessage = `Brevo error ${response.status}`;
+      try {
+        const parsed = JSON.parse(errorText);
+        if (parsed.message) errorMessage = parsed.message;
+        else if (parsed.error) errorMessage = parsed.error;
+        else if (parsed.title) errorMessage = parsed.title;
+      } catch (parseError) {
+        // ignore
+      }
+
+      return new Response(JSON.stringify({ error: errorMessage, detail: errorText }), { status: 502, headers: { 'Content-Type': 'application/json' } });
     }
 
     return new Response(JSON.stringify({ message: 'Your message has been sent successfully.' }), { status: 200, headers: { 'Content-Type': 'application/json' } });
   } catch (error) {
     console.error('Pages function error:', error);
-    return new Response(JSON.stringify({ error: 'Unable to send message. Please try again later.' }), { status: 500, headers: { 'Content-Type': 'application/json' } });
+    return new Response(JSON.stringify({ error: error.message || 'Unable to send message. Please try again later.' }), { status: 500, headers: { 'Content-Type': 'application/json' } });
   }
 }
 
