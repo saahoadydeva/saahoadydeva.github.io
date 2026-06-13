@@ -70,6 +70,14 @@
     }
     .avail-text { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-secondary); }
     .avail-text span { color: var(--neon-green); }
+    .google-form-embed {
+      border: 1px solid var(--dark-border);
+      border-radius: 4px;
+      overflow: hidden;
+      background: var(--dark-secondary);
+    }
+    .google-form-wrapper a { color: var(--neon-cyan); text-decoration: none; }
+    .google-form-wrapper a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -173,42 +181,13 @@
             </div>
             <div class="terminal-body">
               <div class="contact-form">
-                <form>
-                  <div class="form-group">
-                    <label class="form-label" for="name">Your Name</label>
-                    <input class="form-input" type="text" id="name" placeholder="Enter your name" required />
+                <div class="google-form-wrapper">
+                  <p style="margin-bottom:1rem; color:var(--text-secondary);">This contact page now uses Google Forms for message delivery. Please complete the form below and submit it to reach me.</p>
+                  <div class="google-form-embed">
+                    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfPxsRmxQQ_T4JY272qlDsYyHvGN_Kj6IM-nLo_9nGCPKsZhA/viewform?embedded=true" width="100%" height="700" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
                   </div>
-
-                  <div class="form-group">
-                    <label class="form-label" for="email">Email Address</label>
-                    <input class="form-input" type="email" id="email" placeholder="your@email.com" required />
-                  </div>
-
-                  <div class="form-group">
-                    <label class="form-label" for="subject">Subject</label>
-                    <input class="form-input" type="text" id="subject" placeholder="What's this about?" />
-                  </div>
-
-                  <div class="form-group">
-                    <label class="form-label" for="type">Project Type</label>
-                    <select class="form-input" id="type">
-                      <option value="">Select type...</option>
-                      <option>Web Development</option>
-                      <option>UI/UX Design</option>
-                      <option>AI / ML Project</option>
-                      <option>Drone Systems</option>
-                      <option>Consultation</option>
-                      <option>Other</option>
-                    </select>
-                  </div>
-
-                  <div class="form-group">
-                    <label class="form-label" for="message">Message</label>
-                    <textarea class="form-textarea" id="message" rows="5" placeholder="Describe your project or query..." required></textarea>
-                  </div>
-
-                  <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center; padding:0.85rem;">Transmit</button>
-                </form>
+                  <p style="margin-top:1rem; color:var(--text-secondary);">If the embedded form does not load, <a href="https://docs.google.com/forms/d/e/1FAIpQLSfPxsRmxQQ_T4JY272qlDsYyHvGN_Kj6IM-nLo_9nGCPKsZhA/viewform" target="_blank" rel="noopener noreferrer">open it in a new tab</a>.</p>
+                </div>
               </div>
             </div>
           </div>
