@@ -126,18 +126,46 @@ const contactForm = document.querySelector('.contact-form form');
 if (contactForm) {
   contactForm.addEventListener('submit', (e) => {
     e.preventDefault();
+
+    const name = contactForm.querySelector('#name')?.value.trim();
+    const email = contactForm.querySelector('#email')?.value.trim();
+    const subjectInput = contactForm.querySelector('#subject')?.value.trim();
+    const type = contactForm.querySelector('#type')?.value.trim();
+    const message = contactForm.querySelector('#message')?.value.trim();
     const btn = contactForm.querySelector('button[type="submit"]');
+
+    if (!name || !email || !message) {
+      alert('Please fill in your name, email, and message before submitting.');
+      return;
+    }
+
+    const subject = subjectInput || `New inquiry from ${name}`;
+    const bodyLines = [
+      `Name: ${name}`,
+      `Email: ${email}`,
+      type ? `Project Type: ${type}` : '',
+      '',
+      message,
+    ].filter(Boolean);
+    const body = bodyLines.join('\r\n');
+    const mailtoLink = `mailto:mail.bugreports@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
     if (btn) {
-      btn.textContent = '// Message Sent';
+      btn.textContent = 'Opening mail client...';
       btn.style.color = 'var(--neon-green)';
       btn.style.borderColor = 'var(--neon-green)';
-      setTimeout(() => {
+    }
+
+    window.location.href = mailtoLink;
+
+    setTimeout(() => {
+      if (btn) {
         btn.textContent = '// Transmit';
         btn.style.color = '';
         btn.style.borderColor = '';
-        contactForm.reset();
-      }, 3000);
-    }
+      }
+      contactForm.reset();
+    }, 2000);
   });
 }
 
